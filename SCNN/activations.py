@@ -1,6 +1,9 @@
 import numpy as np
 from .models import *
 
+import argparse
+import tqdm
+
 
 def f_decay_noise(shape, decay_factor=0.5, cutoff_f=None):
     """
@@ -80,3 +83,7 @@ def maximize_activation(input, output, lr=0.2, input_generator=f_decay_noise, re
 
 def extract_spatial_stage(model: BestSCNN):
     return model.input, [l for l in model.layers if 'spatial_' in l.name][-1]
+
+
+if __name__ == '__main__':
+    pass
