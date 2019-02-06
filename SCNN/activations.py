@@ -123,7 +123,7 @@ if __name__ == '__main__':
             if args.dest is not None:
                 save_loc = args.dest / s_out.name
                 save_loc.mkdir(parents=True, exist_ok=True)
-                plt.savefig(str(save_loc / 'spatial_component_{0}.png'.format(i)))
+                plt.savefig(str(save_loc / 'spatial_stage_{0}' / 'component_{1}.png'.format(j, i)))
             plt.clf()
 
     # Output Maximization wrt Temporal Layers
