@@ -21,7 +21,7 @@ def create_raw(X, y, trial_starts, artifacts, misc):
     """
     info = mne.create_info(ch_names=ch_names, ch_types=ch_types, sfreq=misc['fs'])
     info['lowpass'] = 100.
-    info['highpass'] = 0.5
+    info['highpass'] = 0.1
     info['subject_info'] = {k: misc[k] for k in misc.keys() if k != 'fs'}
     raw = mne.io.RawArray(X.T, info)
     events = np.vstack([trial_starts, np.zeros_like(y), y]).T
@@ -66,6 +66,10 @@ if __name__ == '__main__':
     for subject in tqdm.trange(1, NUM_SUBJECTS+1, desc='Subject:', unit='subjects'):
         for subset in tqdm.tqdm('TE', desc='Train/Evaluate Subset'):
             f = 'A0{}{}.mat'.format(subject, subset)
+            destination = (args.dest / Path(f).name).with_suffix('.raw.fif')
+            if destination.exists():
+                tqdm.tqdm.write('Skipping {}'.format(destination.name))
+                continue
             if not args.no_dl and not (args.dl_directory / f).exists():
                 wget.download(URL+f, out=str(args.dl_directory))
 
@@ -78,6 +82,5 @@ if __name__ == '__main__':
             raw = mne.concatenate_raws(raws)
 
             tqdm.tqdm.write('Raw created for: ' + f)
-            destination = (args.dest / Path(f).name).with_suffix('.raw.fif')
             tqdm.tqdm.write('Saving to: ' + str(destination))
             raw.save(str(destination), fmt='single', verbose=2, overwrite=True)

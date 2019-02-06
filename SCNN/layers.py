@@ -6,7 +6,7 @@ class ExpandLayer(keras.layers.Layer):
 
     def __init__(self, axis=-1, **kwargs):
         self.axis = axis
-        super().__init__(**kwargs)
+        super(ExpandLayer, self).__init__(**kwargs)
 
     def compute_output_shape(self, input_shape):
         ax = self.axis
@@ -18,6 +18,9 @@ class ExpandLayer(keras.layers.Layer):
 
     def call(self, inputs, **kwargs):
         return K.expand_dims(inputs, axis=self.axis)
+
+    def get_config(self):
+        return dict(axis=self.axis)
 
 
 class SqueezeLayer(ExpandLayer):
@@ -61,7 +64,7 @@ class AttentionLSTMIn(keras.layers.LSTM):
             raise TypeError('Could not understand style: ' + style)
         else:
             self.style = style
-        super().__init__(units, implementation=implementation, **kwargs)
+        super(AttentionLSTMIn, self).__init__(units, implementation=implementation, **kwargs)
 
     def build(self, input_shape):
         assert len(input_shape) > 2
