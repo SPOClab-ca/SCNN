@@ -4,7 +4,7 @@ A Convolutional Neural Network model paradigm for learning to classify
 M/EEG implemented with **Keras** and **MNE**. Including techniques to 
 produce spatial and temporal visualizations of model insights.
 
-First introduced in [Machine learning for MEG during speech tasks](www.nature.com/articles/s41598-019-38612-9),
+First introduced in [Machine learning for MEG during speech tasks](https://www.nature.com/articles/s41598-019-38612-9),
 if you find any of the models, or tools herein useful, we kindly request
 that you cite this work.
 
